@@ -5,6 +5,7 @@ import (
 	"github.com/aryala7/ecom/service/auth"
 	"github.com/aryala7/ecom/types"
 	"github.com/aryala7/ecom/utils"
+	"github.com/go-playground/validator/v10"
 	"github.com/gorilla/mux"
 	"net/http"
 )
@@ -32,6 +33,12 @@ func (h *Handler) handleRegister(w http.ResponseWriter, r *http.Request) {
 	var payload types.RegisterUserPayload
 	if err := utils.ParseJson(r, &payload); err != nil {
 		utils.WriteError(w, http.StatusBadRequest, err)
+		return
+	}
+	//validate the payload
+	if err := utils.Validate.Struct(payload); err != nil {
+		errText := err.(validator.ValidationErrors)
+		utils.WriteError(w, http.StatusBadRequest, fmt.Errorf("invalid payload %v", errText))
 		return
 	}
 	_, err := h.store.GetUserByEmail(payload.Email)

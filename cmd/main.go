@@ -3,8 +3,8 @@ package main
 import (
 	"database/sql"
 	"github.com/aryala7/ecom/cmd/api"
-	"github.com/aryala7/ecom/cmd/config"
-	db "github.com/aryala7/ecom/cmd/db"
+	"github.com/aryala7/ecom/config"
+	"github.com/aryala7/ecom/db"
 	"github.com/go-sql-driver/mysql"
 	"log"
 )
