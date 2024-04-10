@@ -52,6 +52,10 @@ func (s *Store) GetUserById(id int) (*types.User, error) {
 }
 
 func (s *Store) CreateUser(user types.User) error {
+	_, err := s.db.Exec("INSERT INTO users (firstName, lastName, email, password) values (?,?,?,?)", user.FirstName, user.LastName, user.Email, user.Password)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 func scanRowsIntoUser(rows *sql.Rows) (*types.User, error) {
